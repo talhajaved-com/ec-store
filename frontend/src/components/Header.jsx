@@ -38,7 +38,7 @@ function Header() {
   const data = JSON.parse(localStorage.getItem("data"));
   const isLoggedIn = data?.success;
   const username = isLoggedIn ? `${data.user.first_name}` : "";
-//  console.log(data.user.role);
+
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);

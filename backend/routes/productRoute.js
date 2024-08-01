@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Routes
-router.post("/add", authMiddleware, upload.single("image"), productController); // Using Multer middleware
+router.post("/add", authMiddleware, upload.single("image"), productController);
 router.get("/all", getProducts);
 router.delete("/:id", deleteProduct);
 router.get("/:id", singleProduct);

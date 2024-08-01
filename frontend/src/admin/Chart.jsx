@@ -3,7 +3,6 @@ import { LineChart, axisClasses } from '@mui/x-charts';
 
 import Title from './Title';
 
-// Generate Sales Data
 function createData(time, amount) {
   return { time, amount: amount ?? null };
 }

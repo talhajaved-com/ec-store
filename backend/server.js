@@ -19,7 +19,6 @@ app.use(cors());
 connectDB();
 
 const __dirname = path.resolve();
-console.log("Current directory:", __dirname);
 
 // Routes
 app.use("/api/v1/product", productRoute);

@@ -8,7 +8,6 @@ import authMiddleware from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.post("/signup", auth_register_controller);
-// Login
 router.post("/login", auth_login_controller);
 router.post("/logout", authMiddleware, auth_logout_controller);
 
