@@ -15,6 +15,7 @@ import Deposits from "./admin/Deposits";
 import UserLayout from "./components/UserLayout";
 
 const publicRoutes = [
+  { path: "/", element: <Login /> },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
   { path: "*", element: <NotFoundPage /> },

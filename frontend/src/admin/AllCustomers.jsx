@@ -1,81 +1,85 @@
-import { useEffect, useState } from "react";
-import { Container, Grid, Card, CardContent, Typography, Button, CircularProgress, Box } from "@mui/material";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { List, ListItem, ListItemText, Switch } from "@mui/material";
 import { toast } from "react-toastify";
-
-const { VITE_API_URL } = import.meta.env;
+import { getUsers } from "../api_Calls/AuthApiCalls";
 
 const AllCustomers = () => {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const result = await axios.get(`${VITE_API_URL}/api/v1/users`);
-        setUsers(result.data);
-        setLoading(false);
+        const fetchedUsers = await getUsers();
+        setUsers(fetchedUsers);
       } catch (error) {
-        console.error("Error fetching users:", error);
-        setError("Failed to fetch users.");
-        setLoading(false);
+        console.error("Failed to fetch users:", error);
+        toast.error("Failed to fetch users");
       }
     };
-
     fetchUsers();
   }, []);
 
-  if (loading) {
-    return (
-      <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 80px)', marginTop: '80px' }}>
-        <CircularProgress />
-      </Container>
-    );
-  }
 
-  if (error) {
-    return (
-      <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 80px)', marginTop: '80px' }}>
-        <Typography variant="h6" color="error">{error}</Typography>
-      </Container>
-    );
-  }
+  const handleRoleChange = async (userId, currentRole) => {
+    try {
+      const newRole = currentRole === 1 ? 0 : 1;
+      setUsers(users.map(user => user._id === userId ? { ...user, role: newRole } : user));
+      toast.success("Role updated successfully");
+    } catch (error) {
+      console.error("Failed to update role:", error);
+      toast.error("Failed to update role");
+    }
+  };
 
   return (
-    <Container maxWidth="lg" sx={{ marginTop: "80px" }}>
-      <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', marginBottom: '20px' }}>
-        Users List
+    <Box
+      sx={{
+        flexGrow: 1,
+        padding: "5px",
+        marginTop: "100px",
+        backgroundColor: "#f9f9f9",
+      }}
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ marginBottom: "2rem", color: "#333" }}
+      >
+        All Customers
       </Typography>
-      <Grid container spacing={3}>
-        {users.map(user => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={user._id}>
-            <Card sx={{ borderRadius: "10px", boxShadow: 3 }}>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  {user.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  Email: {user.email}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  Role: {user.role}
-                </Typography>
-                <Box sx={{ marginTop: 2, textAlign: 'center' }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => toast.info(`View details for ${user.name}`)}
-                  >
-                    View Details
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+      <List>
+        {users.map((user) => (
+          <ListItem
+            key={user._id}
+            sx={{
+              borderBottom: "1px solid #ddd",
+              borderRadius: "8px",
+              marginBottom: "1rem",
+              backgroundColor: user.role === 1 ? "#ffe6e6" : "#fff",
+              color: user.role === 1 ? "red" : "inherit",
+              "&:hover": {
+                backgroundColor: user.role === 1 ? "#ffd6d6" : "#f5f5f5",
+                cursor: "pointer",
+              },
+            }}
+            secondaryAction={
+              <Switch
+                checked={user.role === 1}
+                onChange={() => handleRoleChange(user._id, user.role)}
+              />
+            }
+          >
+            <ListItemText
+              primary={`${user.first_name} ${user.last_name}`}
+              secondary={`Email: ${user.email} | Role: ${user.role === 1 ? "Admin" : "User"}`}
+              sx={{ flex: 1 }}
+            />
+          </ListItem>
         ))}
-      </Grid>
-    </Container>
+      </List>
+    </Box>
   );
 };
 

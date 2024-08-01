@@ -32,3 +32,13 @@ export const signup = async (firstName, lastName, email, password) => {
 
   }
 };
+
+
+export const getUsers = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/customer/all-customers`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch users');
+  }
+};

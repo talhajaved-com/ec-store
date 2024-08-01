@@ -22,42 +22,7 @@ const orders = [
     total: 29.99,
     status: "Complete",
   },
-  { id: "67890", items: ["Product 3"], total: 19.99, status: "Pending" },
-  {
-    id: "12345",
-    items: ["Product 1", "Product 2"],
-    total: 29.99,
-    status: "Complete",
-  },
-  { id: "67890", items: ["Product 3"], total: 19.99, status: "Pending" },
-  {
-    id: "12345",
-    items: ["Product 1", "Product 2"],
-    total: 29.99,
-    status: "Complete",
-  },
-  { id: "67890", items: ["Product 3"], total: 19.99, status: "Pending" },
-  {
-    id: "12345",
-    items: ["Product 1", "Product 2"],
-    total: 29.99,
-    status: "Complete",
-  },
-  { id: "67890", items: ["Product 3"], total: 19.99, status: "Pending" },
-  {
-    id: "12345",
-    items: ["Product 1", "Product 2"],
-    total: 29.99,
-    status: "Complete",
-  },
-  { id: "67890", items: ["Product 3"], total: 19.99, status: "Pending" },
-  {
-    id: "12345",
-    items: ["Product 1", "Product 2"],
-    total: 29.99,
-    status: "Complete",
-  },
-  { id: "67890", items: ["Product 3"], total: 19.99, status: "Pending" },
+  { id: "67890", items: ["Product 3"], total: 19.99, status: "Pending" }
 ];
 
 const UserOrders = () => {

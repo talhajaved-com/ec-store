@@ -2,6 +2,7 @@ import express from "express";
 import connectDB from "./database/dbConnect.js";
 import productRoute from "./routes/productRoute.js";
 import authRoutes from "./routes/authRoutes.js";
+import customerRoutes from "./routes/customerRoutes.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
@@ -22,6 +23,7 @@ const __dirname = path.resolve();
 
 // Routes
 app.use("/api/v1/product", productRoute);
+app.use("/api/v1/customer", customerRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
